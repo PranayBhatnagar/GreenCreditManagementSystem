@@ -1,0 +1,51 @@
+<!-- index.html (Frontend - HTML + Jinja2) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization and Predictions</title>
+</head>
+<body>
+    <!-- Add any UI elements here (e.g., form inputs, buttons) -->
+    <form id="prediction-form">
+        <!-- Input fields for user input -->
+        <!-- For example, you can add input fields for each feature -->
+        <!-- You can use JavaScript to handle form submission and AJAX to send data to Flask backend -->
+    </form>
+
+    <!-- Display visualizations here -->
+    <!-- For example, you can use Plotly Dash components to create interactive plots -->
+
+    <script>
+        // JavaScript code for handling form submission and AJAX request
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            // Get form data and convert it to JSON
+            let formData = new FormData(this);
+            let jsonData = {};
+            formData.forEach(function(value, key) {
+                jsonData[key] = value;
+            });
+
+            // Send AJAX request to Flask backend
+            fetch('/predict', {
+                method: 'POST',
+                body: JSON.stringify(jsonData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the prediction response
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
