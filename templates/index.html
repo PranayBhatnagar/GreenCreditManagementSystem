@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization and Predictions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-top: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Green Credit Project!</h1>
+        <p>Help us make a positive impact on the environment by contributing to sustainable energy practices.</p>
+        <form id="prediction-form">
+            <label for="clean_fuels">Access to clean fuels for cooking:</label>
+            <input type="text" id="clean_fuels" name="clean_fuels" placeholder="E.g., 85.0">
+
+            <label for="electricity_access">Access to electricity (% of population):</label>
+            <input type="text" id="electricity_access" name="electricity_access" placeholder="E.g., 99.0">
+
+            <label for="density">Density (P/Km2):</label>
+            <input type="text" id="density" name="density" placeholder="E.g., 200">
+
+            <label for="electricity_fossil">Electricity from fossil fuels (TWh):</label>
+            <input type="text" id="electricity_fossil" name="electricity_fossil" placeholder="E.g., 3000">
+
+            <label for="electricity_nuclear">Electricity from nuclear (TWh):</label>
+            <input type="text" id="electricity_nuclear" name="electricity_nuclear" placeholder="E.g., 500">
+
+            <!-- Add more input fields for other features if needed -->
+
+            <button type="submit">Predict</button>
+        </form>
+        <div id="prediction-result" class="result" style="display:none;">
+            <h3>Prediction Results:</h3>
+            <p id="result-electricity-renewables"></p>
+            <p id="result-co2-emissions"></p>
+            <p id="result-renewables-percentage"></p>
+            <p id="result-gdp-growth"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            // Get form data and convert it to JSON
+            let formData = {
+                'Access to clean fuels for cooking': document.getElementById('clean_fuels').value,
+                'Access to electricity (% of population)': document.getElementById('electricity_access').value,
+                'Density (P/Km2)': document.getElementById('density').value,
+                'Electricity from fossil fuels (TWh)': document.getElementById('electricity_fossil').value,
+                'Electricity from nuclear (TWh)': document.getElementById('electricity_nuclear').value
+                // Add other features here if needed
+            };
+
+            // Send AJAX request to Flask backend
+            fetch('/predict', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Handle the prediction response
+                    document.getElementById('result-electricity-renewables').textContent = `Electricity from renewables (TWh): ${data["Electricity from renewables (TWh)"]}`;
+                    document.getElementById('result-co2-emissions').textContent = `CO2 Emissions (kt): ${data["Value_co2_emissions_kt_by_country"]}`;
+                    document.getElementById('result-renewables-percentage').textContent = `Renewables (% equivalent primary energy): ${data["Renewables (% equivalent primary energy)"]}`;
+                    document.getElementById('result-gdp-growth').textContent = `GDP Growth: ${data["gdp_growth"]}`;
+                    document.getElementById('prediction-result').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
