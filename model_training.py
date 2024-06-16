@@ -17,16 +17,18 @@ data[numeric_columns] = data[numeric_columns].apply(pd.to_numeric, errors='coerc
 # Define features and target variables
 X = data.drop(columns=['Entity', 'Year', 'Latitude', 'Longitude'])  # Features (excluding non-numeric columns)
 y = data[['Electricity from renewables (TWh)', 'Value_co2_emissions_kt_by_country', 'Renewables (% equivalent primary energy)', 'gdp_growth']]  # Target variables
-
+print(X.columns)
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
+X_=X.drop(columns=['Electricity from renewables (TWh)', 'Value_co2_emissions_kt_by_country', 'Renewables (% equivalent primary energy)', 'gdp_growth'])
 # Initialize and train multiple models
 models = {
     'Linear Regression': LinearRegression(),
     'Decision Tree': DecisionTreeRegressor(),
     'Random Forest': RandomForestRegressor()
 }
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 best_model = None
 best_score = float('inf')  # Initialize with a high value for MSE (we want to minimize MSE)
@@ -53,4 +55,4 @@ for name, model in models.items():
         best_score = mse
 
 # Save the best model
-joblib.dump(best_model, 'best_multivariate_model.joblib')
+joblib.dump(best_model, 'templates/best_multivariate_model.joblib')
