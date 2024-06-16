@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Form</title>
+</head>
+<body>
+    <h1>Enter Data for Prediction</h1>
+    <form id="predictionForm" method="post" action="{% url 'predict' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Predict</button>
+    </form>
+    <div id="predictionResult" style="margin-top: 20px; display: none;">
+        <h2>Prediction Result:</h2>
+        <p id="result-electricity-renewables"></p>
+        <p id="result-co2-emissions"></p>
+        <p id="result-renewables-percentage"></p>
+        <p id="result-gdp-growth"></p>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('predictionResult');
+                resultDiv.style.display = 'block';
+                document.getElementById('result-electricity-renewables').textContent = `Electricity from renewables (TWh): ${data["Electricity from renewables (TWh)"]}`;
+                document.getElementById('result-co2-emissions').textContent = `CO2 Emissions (kt): ${data["Value_co2_emissions_kt_by_country"]}`;
+                document.getElementById('result-renewables-percentage').textContent = `Renewables (% equivalent primary energy): ${data["Renewables (% equivalent primary energy)"]}`;
+                document.getElementById('result-gdp-growth').textContent = `GDP Growth: ${data["gdp_growth"]}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                var resultDiv = document.getElementById('predictionResult');
+                resultDiv.innerHTML = '<p style="color: red;">An error occurred. Please try again.</p>';
+            });
+        });
+    </script>
+</body>
+</html>
