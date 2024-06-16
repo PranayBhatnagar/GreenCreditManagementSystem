@@ -1,41 +1,38 @@
 {
     "Access to clean fuels for cooking": [
-        "85"
+        ""
     ],
     "Access to electricity (% of population)": [
-        "99"
+        ""
     ],
     "Density(P/Km2)": [
-        "200"
+        ""
     ],
     "Electricity from fossil fuels (TWh)": [
-        "3000"
+        ""
     ],
     "Electricity from nuclear (TWh)": [
-        "500"
+        ""
     ],
     "Energy intensity level of primary energy (MJ/$2017 PPP GDP)": [
-        "5"
+        ""
     ],
     "Land Area(Km2)": [
-        "50000"
+        ""
     ],
     "Low-carbon electricity (% electricity)": [
-        "40"
+        ""
     ],
     "Primary energy consumption per capita (kWh/person)": [
-        "5000"
+        ""
     ],
     "Renewable-electricity-generating-capacity-per-capita": [
-        "10"
-    ],
-    "Financial flows to developing countries (US $)": [
-        "100000"
+        ""
     ],
     "Renewable energy share in the total final energy consumption (%)": [
-        "20"
+        ""
     ],
-    "gdp_per_capita (US $)": [
-        "50000"
+    "gdp_per_capita": [
+        ""
     ]
 }

@@ -1,5 +1,5 @@
 # app.py (Backend - Flask)
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import joblib
 import pandas as pd
 import numpy as np
@@ -57,14 +57,14 @@ def predict():
             "Renewables (% equivalent primary energy)": prediction[2],
             "gdp_growth": prediction[3]
         }
-        print(prediction_result[0])
 
 
         # Return the prediction as JSON response
-        return jsonify(prediction_result)
+        return jsonify({'prediction': prediction_result})
     except Exception as e:
         # If an error occurs, return an error message as JSON response
-        return jsonify({"error": str(e)}), 500  # HTTP status code 500 for internal server error
+        print(e)
+        return redirect(url_for('index'))  # HTTP status code 500 for internal server error
 
 if __name__ == '__main__':
     app.run(debug=True)

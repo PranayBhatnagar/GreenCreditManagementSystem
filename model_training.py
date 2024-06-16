@@ -17,9 +17,18 @@ data[numeric_columns] = data[numeric_columns].apply(pd.to_numeric, errors='coerc
 # Define features and target variables
 X = data.drop(columns=['Entity', 'Year', 'Latitude', 'Longitude'])  # Features (excluding non-numeric columns)
 y = data[['Electricity from renewables (TWh)', 'Value_co2_emissions_kt_by_country', 'Renewables (% equivalent primary energy)', 'gdp_growth']]  # Target variables
-print(X.columns)
 # Split the data into training and testing sets
-X_=X.drop(columns=['Electricity from renewables (TWh)', 'Value_co2_emissions_kt_by_country', 'Renewables (% equivalent primary energy)', 'gdp_growth'])
+# Ensure all specified columns exist before attempting to drop them
+columns_to_drop = [
+    'Electricity from renewables (TWh)',
+    'Value_co2_emissions_kt_by_country',
+    'Renewables (% equivalent primary energy)',
+    'gdp_growth'
+]
+
+# Drop the specified columns from the DataFrame
+X_ = X.drop(columns=columns_to_drop)
+print(X_.columns)
 # Initialize and train multiple models
 models = {
     'Linear Regression': LinearRegression(),
@@ -28,7 +37,7 @@ models = {
 }
 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_, y, test_size=0.2, random_state=42)
 
 best_model = None
 best_score = float('inf')  # Initialize with a high value for MSE (we want to minimize MSE)

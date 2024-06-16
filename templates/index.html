@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization and Predictions</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,13 +124,7 @@
         <button type="submit" >Predict</button>
     </form>
 
-        <div id="prediction-result" class="result" style="display:none;">
-            <h3>Prediction Results:</h3>
-            <p id="result-electricity-renewables"></p>
-            <p id="result-co2-emissions"></p>
-            <p id="result-renewables-percentage"></p>
-            <p id="result-gdp-growth"></p>
-        </div>
+
     </div>
 
     <script>
@@ -138,19 +133,18 @@
 
             // Get form data and convert it to JSON
             let formData = {
-    'Access to clean fuels for cooking': document.getElementById('clean_fuels').value,
     'Access to electricity (% of population)': document.getElementById('electricity_access').value,
-    'Density(P/Km2)': document.getElementById('density').value,
+    'Access to clean fuels for cooking': document.getElementById('clean_fuels').value,
+    'Renewable-electricity-generating-capacity-per-capita': document.getElementById('renewable_capacity_per_capita').value,
+    'Renewable energy share in the total final energy consumption (%)': document.getElementById('renewable_share_final_energy').value,
     'Electricity from fossil fuels (TWh)': document.getElementById('electricity_fossil').value,
     'Electricity from nuclear (TWh)': document.getElementById('electricity_nuclear').value,
-    'Energy intensity level of primary energy (MJ/$2017 PPP GDP)': document.getElementById('energy_intensity').value,
-    'Land Area(Km2)': document.getElementById('land_area').value,
     'Low-carbon electricity (% electricity)': document.getElementById('low_carbon_electricity').value,
     'Primary energy consumption per capita (kWh/person)': document.getElementById('energy_consumption_per_capita').value,
-    'Renewable-electricity-generating-capacity-per-capita': document.getElementById('renewable_capacity_per_capita').value,
-    'Financial flows to developing countries (US $)': document.getElementById('financial_flows').value,
-    'Renewable energy share in the total final energy consumption (%)': document.getElementById('renewable_share_final_energy').value,
-    'gdp_per_capita (US $)': document.getElementById('gdp_per_capita').value
+    'Energy intensity level of primary energy (MJ/$2017 PPP GDP)': document.getElementById('energy_intensity').value,
+    'gdp_per_capita': document.getElementById('gdp_per_capita').value
+    'Density(P/Km2)': document.getElementById('density').value,
+    'Land Area(Km2)': document.getElementById('land_area').value,
 };
 
 
